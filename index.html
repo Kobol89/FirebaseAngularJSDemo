@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html ng-app="UserApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Userverwaltung</title>
+
+    <!-- Include Firebase -->
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+
+    <!-- Include AngularJS -->
+    <script type="text/javascript" src="lib/angular.min.js"></script>
+    <script type="text/javascript" src="lib/angular-route.js"></script>
+
+    <!-- AngularFire -->
+    <script src="https://cdn.firebase.com/libs/angularfire/0.9.2/angularfire.min.js"></script>
+
+    <!-- Eigene Files -->
+    <script type="text/javascript" src="js/Controller.js"></script>
+
+    <!-- CSS -->
+    <link href="css/userstorage.css" rel="stylesheet" />
+
+    <!-- TODO ggf. CSS -->
+
+</head>
+<body ng-controller="UserController" class="main">
+    <!-- Usertable -->
+    <table class="UserTable">
+        <tr>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Adresse</th>
+            <th><button type="button" name="btn_refresh" ng-click="refreshUser()">Refresh</button></th>
+            <th><button type="button" name="btn_add" ng-click="addUser()">Hinzuf&uuml;gen</button></th>
+
+        </tr>
+        <tr ng-repeat="user in users">
+            <td>{{user.name}}</td>
+            <td>{{user.lastname}}</td>
+            <td>{{user.address}}</td>
+            <td><button type="button" id="btn_change" ng-click="changeUser(user.id)">&auml;ndern</button></td>
+            <td><button type="button" id="btn_delete" ng-click="users.$remove(user)">L&ouml;schen</button></td>
+            <td>{{$index}}</td>
+        </tr>
+    </table>
+
+    <!-- Dialog zum Bearbeiten/Hinzufügen der Userdaten BEGIN -->
+    <div id="dialog_user" class="UserDialog"> <!-- TODO CSS -->
+        <div class="UserLabel">Vorname:</div>
+        <div class="UserData">
+            <input type="text" id="txt_name"      ng-model="userdetail.name" ng-value="userdetail.name"/>
+        </div>
+
+        <div class="UserLabel">Nachname:</div>
+        <div class="UserData">
+            <input type="text" id="txt_lastname"  ng-model="userdetail.lastname" ng-value="userdetail.lastname"/>
+        </div>
+
+        <div class="UserLabel">Adress:</div>
+        <div class="UserData">
+            <input type="text" id="txt_address"   ng-model="userdetail.address" ng-value="userdetail.address"/>
+        </div>
+
+        <button type="button" id="btn_save"   ng-click="saveUser()">Speichern</button>
+        <button type="button" id="btn_cancel" ng-click="cancelUser()">Abbrechen</button>
+
+        <br/>
+        <input type="hidden" id="hidden_UserID" ng-model="userdetail.id" ng-value="userdetail.id" />
+    </div>
+    <!-- Dialog zum Bearbeiten der Userdaten END -->
+
+</body>
+</html>
